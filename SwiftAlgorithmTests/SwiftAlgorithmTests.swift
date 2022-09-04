@@ -18,18 +18,78 @@ class SwiftAlgorithmTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    private func generateRandomArray(bound: Int) -> [Int]
+    {
+        var arr = [Int]()
+        
+        for _ in 0 ..< bound
+        {
+            let ele = Int.random(in: 0...100)
+            arr.append(ele)
+        }
+        return arr
+    }
+    
+    
+    private func isSorted(arr: [Int]) -> Bool
+    {
+        for i in 1 ..< arr.count
+        {
+            if arr[i] < arr[i - 1]
+            {
+                return false
+            }
+        }
+        return true
+    }
+    
+    func testBinaryTree() throws
+    {
+        let array = [2,14,23,5,6,7,9,15,34,64,55,123]
+        
+        var tree = BinaryTree(array[0])
+        
+        tree.pushs(array)
+        
+        XCTAssertTrue(tree.search(9))
+    }
+    
+    
+    func testQuickSort() throws
+    {
+        for _ in 0 ..< 10000
+        {
+            var arr = generateRandomArray(bound: 10)
+            
+            QuickSort<Int>.sort(arr: &arr, low: 0, high: arr.count - 1)
+            
+            XCTAssertTrue(isSorted(arr: arr))
+        }
+    }
+    
+    
+    func testMergeSort() throws
+    {
+        for _ in 0 ..< 10000
+        {
+            var arr = generateRandomArray(bound: 10)
+            
+            MergeSort<Int>.sort(arr: &arr)
+            
+            XCTAssertTrue(isSorted(arr: arr))
+        }
+    }
+    
+    func testSelectionSort() throws
+    {
+        for _ in 0 ..< 10000
+        {
+            var arr = generateRandomArray(bound: 10)
+            
+            SelectionSort<Int>.sort(arr: &arr)
+            
+            XCTAssertTrue(isSorted(arr: arr))
         }
     }
 
